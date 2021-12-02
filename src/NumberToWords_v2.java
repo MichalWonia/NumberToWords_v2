@@ -24,8 +24,7 @@ public class NumberToWords_v2 {
         return number;
     }
 
-    public static void numberToWords(int number)
-    {
+    public static void numberToWords(int number) {
         String thousands = "thousand";
         String hundreds = "hundred ";
 
@@ -65,36 +64,53 @@ public class NumberToWords_v2 {
 
         System.out.println("Your number in words is:");
 
-        if(number < 0)
-        {
-            System.out.print("Minus ");
+        if (number < 0) {
+            System.out.print("minus ");
             number = -number;
         }
 
         String numberString = Integer.toString(number);
         int[] numArray = new int[4];
-        int end = numberString.length() - 1;
 
-        for(int i = 0; i < numberString.length(); i++)
-        {
+        for (int i = 0, end = numberString.length() - 1; i < numberString.length(); i++, end--) {
             numArray[i] = Character.getNumericValue(numberString.charAt(end));
-            end--;
         }
 
         int hun = numArray[2];
         int ten = numArray[1];
         int uni = numArray[0];
 
-        System.out.println(hun);
-        System.out.println(ten);
-        System.out.println(uni);
+        if (numberString.length() == 4)
+        {
+            System.out.print(thousands);
 
+        } else {
+            if (numberString.length() == 3) {
+                System.out.print(unities[hun] + " " + hundreds + "and ");
+            }
+            if (ten >= 2) {
+                System.out.print(tens[ten - 1]);
+            }
+            if (ten == 1) {
+                if (uni == 0) {
+                    System.out.print(tens[0]);
+                } else {
+                    System.out.print(teens[uni - 1]);
+                }
+            }
+            if (uni != 0 && (numberString.length() == 1 || ten == 0 || ten >= 2 && uni > 0))
+            {
+                System.out.print(unities[uni]);
+            }
+            if (uni == 0 && numberString.length() == 1) {
+                System.out.print(unities[0]);
+            }
+        }
     }
 
     public static void main(String[] args) {
         int number = enterTheNumber();
         numberToWords(number);
-
     }
 }
 
